@@ -2,13 +2,13 @@ name: Send notification on new issue
 on:
   issues:
     types: [opened]
-    
+
 jobs:
   # tag the team from the variables on any new issues created in this repo
   tag-a-user:
     if: ${{ vars.SEND_NOTIFICATION == 'true' }}
     runs-on: ubuntu-latest
-    steps: 
+    steps:
     - uses: paritytech-actions/workflow-application-token-action@v2.1.0
       if: ${{ vars.use_github_app == 'true' }}
       id: get-workflow-token
@@ -17,7 +17,7 @@ jobs:
         application_private_key: ${{ secrets.GH_AUTOMATION_PRIVATE_KEY }}
 
     - id: get-token
-      env: 
+      env:
         github_app_token: ${{ steps.get-workflow-token.outputs.token }}
         PAT_GITHUB: ${{ secrets.PAT_GITHUB }}
       run: |
@@ -29,9 +29,9 @@ jobs:
           echo "Using personal access token from secret 'PAT_GITHUB'"
         fi
 
-    - uses: asml-actions/issue-comment-tag@v0.1.0
+    - uses: paritytech-actions/issue-comment-tag@v0.1.7
       name: Tag a user or team in an issue comment
-      with: 
+      with:
         issue: ${{ github.event.issue.number }}
         team: ${{ vars.NOTIFICATION_TEAM }}
         owner: ${{ github.repository_owner }}
