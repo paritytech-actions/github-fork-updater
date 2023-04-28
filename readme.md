@@ -1,32 +1,13 @@
-This repository has been created to facilitate updating your forked repositories with review actions. Especially helpful when having a separate organization for all your forked GitHub Actions (as you should for security reasons). Read more on that topic [here](https://devopsjournal.io/blog/2021/02/06/GitHub-Actions-Forking-Repositories).
+This repository has been created to facilitate updating repositories forked into [PARITYTECH-ACTIONS](https://paritytech-actions.github.io/actions-marketplace/) with review actions. 
 
 Process:
-* Fork this repository to the organization / account you want to update your forks in.
-* Configure it using the steps below.
+
 * On a schedule, the workflow will run checking all the repositories in the organization / account
 * If the repository is a fork, it will be checked for incoming updates
-* If there are updates, an issue in the `GitHubForkUpdater` repository will be created.
+* If there are updates, an issue in the `GitHubForkUpdater` repository will be created. Additionally upstreams checked whether they are archived and in such case notifying issue created with call to reviewing team to take an action (find a replacement, take over maintenance, etc.)
 * Validate the incoming changes using the link in the issue
 * If you add the label `update-fork` to the issue, your fork will be updated
 * And the issue will be closed
-
-# Steps
-Watch the demo video here:  
-
-[![Watch the demo video here](video-image.png)](https://youtu.be/Jj033ffS1YQ)
-
-
-Or follow these steps:
-1. Fork this repository to your own organization.
-1. Enable issue in the forked repository (issues are disabled on the fork by default, since you'd want any issues to be created on the parent repo, not the forked one).
-1. Enable the workflow `check-workflow.yml` and allow the schedule to run (GitHub security feature).
-1. Either add a repository secret named `PAT_GITHUB` containing a GitHub Personal Access Token with these scopes: `public_repo, read:org, read:user, repo:status, repo_deployment` (see below on why) or use a GitHub App with `GH_AUTOMATION_ID` and `GH_AUTOMATION_PRIVATE_KEY`. Read more info on the differences [here](https://devopsjournal.io/blog/2022/01/03/GitHub-Tokens).
-1. Add configuration for using a GitHub App or a PAT with the Actions variable in your repo called `USE_GITHUB_APP`, value is true or false.
-1. Trigger the `check-workflow.yml` workflow manually for the first run or wait for the schedule to run.
-1. Check the new issues on the forked repo for instructions on updating your forks.
-1. Verify incoming changes and label the issue if you want to update the fork.
-1. Use the default GitHub Notification messages to keep all your forks up to date or use the `Send notification` variable to tag a team when a new issue is created. Variables are `SEND_NOTIFICATION` and `NOTIFICATION_TEAM`.
-1. Enjoy!
 
 # Schedule runs
 The scheduled runs are planned at weekdays, at 7 AM.
@@ -55,4 +36,7 @@ There are two ways to create this token:
 1. Use a Personal Access Token (has to much rights and is a security risk)!
 
 You can read more information about this in this [blogpost](https://devopsjournal.io/blog/2022/01/03/GitHub-Tokens).
+
+## Acknowledgement
+This setup is based on a great work of [rajbos](https://github.com/rajbos) and forked from [rajbos/github-fork-updater](https://github.com/rajbos/github-fork-updater)
 
