@@ -1,4 +1,4 @@
-This repository has been created to facilitate updating repositories forked into [PARITYTECH-ACTIONS](https://paritytech-actions.github.io/actions-marketplace/) with review actions. 
+# This repository facilitates updating repositories forked into [PARITYTECH-ACTIONS](https://paritytech-actions.github.io/actions-marketplace/) with review actions. 
 
 Process:
 
