@@ -1,8 +1,8 @@
 name: Check for updates for all forks
-on: 
+on:
   push:
     branches:
-      - main 
+      - main
   schedule:
     - cron: 7 0 * * 1-5
   workflow_dispatch:
@@ -24,7 +24,7 @@ jobs:
 
     - id: get-token
       name: Determine token to use
-      env: 
+      env:
         github_app_token: ${{ steps.get-workflow-token.outputs.token }}
         PAT_GITHUB: ${{ secrets.PAT_GITHUB }}
       run: |
@@ -41,11 +41,11 @@ jobs:
     - id: update_step
       shell: pwsh
       name: Check for updates
-      run: | 
+      run: |
         $updateResult = (.\updater.ps1 -orgName ${{ github.repository_owner }} -userName "xxx" -PAT ${{ steps.get-token.outputs.token }} -issuesRepository ${{ github.repository }} )
-        
+
         if ($null -ne $updateResult) {
           $reposWithUpdates = $updateResult[-1]
           Write-Host "Are there any updates available? [$($reposWithUpdates.Count -gt 0)]"
-          echo "::set-output name=update::$($reposWithUpdates.Count -gt 0)"
+          echo "update=$($reposWithUpdates.Count -gt 0)" >> $GITHUB_OUTPUT
         }
